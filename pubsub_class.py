@@ -22,7 +22,7 @@ class RobotMover:
         self.pub.publish(self.vel)
 
     def regulator(self):
-        print(self.distance_passed)
+        print(self.distance_passed, self.vel.linear.x)
         if self.distance_passed >= 1:
             self.vel_publisher(0)
 
