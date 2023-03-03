@@ -15,6 +15,6 @@ def callback_regulator(msg):
         vel.linear.x = 0.1
     pub.publish(vel)
 
-rospy.Sunscriber("/odom", Odometry, callback_regulator)
+rospy.Subscriber("/odom", Odometry, callback_regulator)
 
 rospy.spin()
