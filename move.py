@@ -2,7 +2,7 @@ import rospy
 
 from geometry_msgs.msg import Twist
 
-rospy.itit_node('move_node')
+rospy.init_node('move_node')
 
 pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 

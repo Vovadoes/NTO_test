@@ -2,7 +2,7 @@ import rospy
 
 from std_msgs.msg import String
 
-rospy.itit_node('subscriber_node')
+rospy.init_node('subscriber_node')
 
 def callback(msg):
     print(msg)

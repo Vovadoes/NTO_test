@@ -8,7 +8,7 @@ class RobotMover:
     def __init__(self):
         self.distance_passed = None
         self.vel = Twist()
-        rospy.itit_node('one_meter_node')
+        rospy.init_node('one_meter_node')
 
         self.pub = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
 
