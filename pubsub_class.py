@@ -12,7 +12,7 @@ class RobotMover:
 
         self.pub = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
 
-        rospy.Sunscriber("/odom", Odometry, self.callback_handler)
+        rospy.Subscriber("/odom", Odometry, self.callback_handler)
 
     def callback_handler(self, msg):
         self.distance_passed = msg.pose.pose.position.x
