@@ -25,6 +25,9 @@ class RobotMover:
         print(self.distance_passed, self.vel.linear.x)
         if self.distance_passed >= 1:
             self.vel_publisher(0)
+        else:
+            self.vel_publisher(0.1)
+
 
 r = RobotMover()
 while not rospy.is_shutdown():
