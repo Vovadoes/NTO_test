@@ -8,6 +8,9 @@ import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Int64
 
+from Reader import Reader
+
+
 rospy.init_node("SV610")
 
 sv610 = serial.Serial()
@@ -27,14 +30,18 @@ speed_int64 = Int64()
 
 interval = 0.001
 
+reader = Reader(sv610)
+
+
 def reading_data():
     global move_s
     global speed_int64
-    read_data = sv610.read_until('\n'.encode("utf-8")).decode("utf-8")
+    read_data = reader.readline().decode("utf-8")
+    print('read_data', '=', read_data)
     if read_data != '':
         try:
             dct = json.loads(read_data)
-            print(dct)
+            print('dct', '=', dct)
             move_s = dct['move']
             speed_int64 = dct['speed']
             pub_move.publish(move_s)
@@ -53,31 +60,8 @@ flag = False
 
 sv610.reset_input_buffer()
 while not rospy.is_shutdown():
-    sv610.write(b'OK\n')
-    sleep(interval)
-    sv610.reset_input_buffer()
-    old_time = 0
-    while True:
-        print("reading data")
-        if abs(round(time() - old_time, 1)) > 0.5:
-            sv610.write(json.dumps({"camera": 123}).encode("utf-8"))
-            old_time = time()
-        if sv610.readline().decode("utf-8") == 'Error\n':
-            sv610.reset_input_buffer()
-            old_time = 0
-        elif sv610.readline().decode("utf-8") == 'OK\n':
-            break
-        if sv610.in_waiting != 0:
-            flag = True
-        if flag:
-            flag = False
-            continue
-    sv610.reset_input_buffer()
-    while True:
-        resp = reading_data()
-        if resp is not None:
-            if resp:
-                break
-            else:
-                sv610.write(b'Error\n')
-    sleep(interval)
+    print('read')
+    reading_data()
+    sleep(0.2)
+    print('write')
+    sv610.write((json.dumps({"camera": 123}) + '\n').encode("utf-8"))
