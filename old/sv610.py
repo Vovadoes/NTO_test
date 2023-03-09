@@ -22,14 +22,14 @@ sv610.reset_input_buffer()
 pub_move = rospy.Publisher("move_key", String, queue_size=10)
 pub_speed = rospy.Publisher("speed_movement", Int64, queue_size=10)
 
-move_s = String()
-speed_int64 = Int64()
+rotate = String()
+distance = Int64()
 
 interval = 0.001
 
 def reading_data():
-    global move_s
-    global speed_int64
+    global rotate
+    global distance
     read_data = sv610.read_until('\n'.encode("utf-8")).decode("utf-8")
     if read_data != '':
         try:

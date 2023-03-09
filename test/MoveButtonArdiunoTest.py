@@ -2,7 +2,7 @@ import serial
 import rospy
 from geometry_msgs.msg import Twist
 
-from move_funs import forward
+from move_funs import forward, to_right
 
 rospy.init_node('MoveButtonArdiunoTest')
 
@@ -19,6 +19,8 @@ if __name__ == '__main__':
     while True:
         if ser.in_waiting > 0:
             line = ser.readline().decode('utf-8').rstrip()
+            print(line)
             if line == '1':
                 forward(0.5, vel, pub)
+                to_right(90, vel, pub)
                 ser.flush()

@@ -7,6 +7,6 @@ rospy.init_node('subscriber_node')
 def callback(msg):
     print(msg)
 
-rospy.Sunscriber("Welcome_topic", String, callback)
+rospy.Subscriber("Welcome_topic", String, callback)
 
 rospy.spin()

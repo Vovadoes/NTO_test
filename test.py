@@ -1,6 +1,4 @@
-import serial
-import io
-import json
+lst = [0xaa, 0xfa, 0x01]
 
-from cffi.backend_ctypes import unicode
-
+for i in lst:
+    print(i.to_bytes(1, 'big'))
